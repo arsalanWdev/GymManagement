@@ -1,0 +1,41 @@
+﻿@model GymManagement.Models.Trainer
+
+<div class="container mt-5">
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h2 class="text-center">Create Trainer</h2>
+        </div>
+        <div class="card-body">
+            <form asp-action="Create">
+                <div class="mb-3">
+                    <label for="FullName" class="form-label">Full Name</label>
+                    <input asp-for="FullName" class="form-control" placeholder="Enter full name" />
+                    <span asp-validation-for="FullName" class="text-danger small"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="TrainerType" class="form-label">Trainer Type</label>
+                    <select asp-for="TrainerType" asp-items="new SelectList(ViewBag.TrainerTypes)" class="form-select">
+                        <option value="">Select Trainer Type</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="ContactNo" class="form-label">Contact No</label>
+                    <input asp-for="ContactNo" class="form-control" placeholder="Enter contact number" />
+                    <span asp-validation-for="ContactNo" class="text-danger small"></span>
+                </div>
+                <div class="mb-3">
+                    <label for="Status" class="form-label">Status</label>
+                    <select asp-for="Status" asp-items="new SelectList(ViewBag.StatusOptions)" class="form-select">
+                        <option value="">Select Status</option>
+                    </select>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-primary w-50">Save</button>
+                </div>
+                <div class="text-center">
+                    <a href="/Trainer/Index" class="btn btn-warning">Back To List</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

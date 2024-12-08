@@ -1,0 +1,170 @@
+﻿@model GymManagement.Models.ViewModels.MemberViewModel
+
+@{
+    ViewData["Title"] = "Edit Member";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Edit Member</h1>
+
+<div class="row">
+    <div class="col-md-6">
+        <form asp-action="Edit" method="post" enctype="multipart/form-data">
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <!-- Hidden Id -->
+            <input asp-for="Id" type="hidden" />
+
+            <!-- Full Name -->
+            <div class="form-group">
+                <label asp-for="FullName" class="control-label">Full Name</label>
+                <input asp-for="FullName" class="form-control" />
+                <span asp-validation-for="FullName" class="text-danger"></span>
+            </div>
+
+            <!-- Gender Dropdown -->
+            <div class="form-group">
+                <label asp-for="Gender" class="control-label">Gender</label>
+                <select asp-for="Gender" class="form-control">
+                    <option value="">Select Gender</option>
+                    <option value="Male" selected="@(Model.Gender == "Male")">Male</option>
+                    <option value="Female" selected="@(Model.Gender == "Female")">Female</option>
+                </select>
+                <span asp-validation-for="Gender" class="text-danger"></span>
+            </div>
+
+            <!-- Contact -->
+            <div class="form-group">
+                <label asp-for="Contact" class="control-label">Contact</label>
+                <input asp-for="Contact" class="form-control" />
+                <span asp-validation-for="Contact" class="text-danger"></span>
+            </div>
+
+            <!-- Member Status Dropdown -->
+            <div class="form-group">
+                <label asp-for="MemberStatus" class="control-label">Member Status</label>
+                <select asp-for="MemberStatus" class="form-control">
+                    <option value="Active" selected="@(Model.MemberStatus == "Active")">Active</option>
+                    <option value="Deactive" selected="@(Model.MemberStatus == "Deactive")">Deactive</option>
+                </select>
+                <span asp-validation-for="MemberStatus" class="text-danger"></span>
+            </div>
+
+            <!-- Day Timing Dropdown -->
+            <div class="form-group">
+                <label asp-for="DayTiming" class="control-label">Day Timing</label>
+                <select asp-for="DayTiming" class="form-control">
+                    <option value="Morning" selected="@(Model.DayTiming == "Morning")">Morning</option>
+                    <option value="Evening" selected="@(Model.DayTiming == "Evening")">Evening</option>
+                </select>
+                <span asp-validation-for="DayTiming" class="text-danger"></span>
+            </div>
+
+            <!-- Package Dropdown -->
+            <div class="form-group">
+                <label asp-for="PackageId" class="control-label">Package</label>
+                <select asp-for="PackageId" class="form-control">
+                    @foreach (var package in (IEnumerable<GymManagement.Models.Package>)ViewBag.Packages)
+                    {
+                        <option value="@package.Id" selected="@(Model.PackageId == package.Id)">@package.PackageName</option>
+                    }
+                </select>
+                <span asp-validation-for="PackageId" class="text-danger"></span>
+            </div>
+
+            <!-- Package Expiry Date -->
+            <div class="form-group">
+                <label asp-for="PackageExpiryDate" class="control-label">Package Expiry Date</label>
+                <input asp-for="PackageExpiryDate" type="date" class="form-control" />
+                <span asp-validation-for="PackageExpiryDate" class="text-danger"></span>
+            </div>
+
+            <!-- Trainer Dropdown -->
+            <div class="form-group">
+                <label asp-for="TrainerId" class="form-label fw-bold">Trainer</label>
+                <select asp-for="TrainerId" class="form-select">
+                    @foreach (var trainer in (IEnumerable<GymManagement.Models.Trainer>)ViewBag.Trainers)
+                    {
+                        <option value="@trainer.Id">
+                            @trainer.FullName (@trainer.TrainerType)
+                        </option>
+                    }
+                </select>
+                <span asp-validation-for="TrainerId" class="text-danger"></span>
+            </div>
+
+            <!-- Admission Fee -->
+            <div class="form-group">
+                <label asp-for="AdmissionFee" class="control-label">Admission Fee</label>
+                <input asp-for="AdmissionFee" id="admissionFee" class="form-control" oninput="calculateTotal()" />
+                <span asp-validation-for="AdmissionFee" class="text-danger"></span>
+            </div>
+
+            <!-- Monthly Fee -->
+            <div class="form-group">
+                <label asp-for="MonthlyFee" class="control-label">Monthly Fee</label>
+                <input asp-for="MonthlyFee" id="monthlyFee" class="form-control" oninput="calculateTotal()" />
+                <span asp-validation-for="MonthlyFee" class="text-danger"></span>
+            </div>
+
+            <!-- Discount -->
+            <div class="form-group">
+                <label asp-for="Discount" class="control-label">Discount</label>
+                <input asp-for="Discount" id="discount" class="form-control" oninput="calculateTotal()" />
+                <span asp-validation-for="Discount" class="text-danger"></span>
+            </div>
+
+            <!-- Total Amount -->
+            <div class="form-group">
+                <label asp-for="TotalAmount" class="control-label">Total Amount</label>
+                <input asp-for="TotalAmount" id="totalAmount" class="form-control" readonly />
+                <span asp-validation-for="TotalAmount" class="text-danger"></span>
+            </div>
+
+            <!-- Account -->
+            <div class="form-group">
+                <label asp-for="Account" class="control-label">Account</label>
+                <input asp-for="Account" class="form-control" />
+                <span asp-validation-for="Account" class="text-danger"></span>
+            </div>
+
+            <!-- Photo Upload -->
+            <div class="form-group">
+                <label class="control-label">Upload Photo</label>
+                <input asp-for="photo" type="file" class="form-control" />
+                <span asp-validation-for="photo" class="text-danger"></span>
+            </div>
+
+            <!-- Submit Button -->
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section  Scripts{
+
+    <script>
+        // Function to dynamically calculate total amount
+        function calculateTotal() {
+            const admissionFee = parseFloat(document.getElementById('admissionFee').value) || 0;
+            const monthlyFee = parseFloat(document.getElementById('monthlyFee').value) || 0;
+            const discount = parseFloat(document.getElementById('discount').value) || 0;
+
+            const totalAmount = admissionFee + monthlyFee - discount;
+            document.getElementById('totalAmount').value = totalAmount.toFixed(2);
+        }
+
+        // Initialize calculation for existing values
+        window.onload = function () {
+            calculateTotal();
+        };
+    </script>
+
+}

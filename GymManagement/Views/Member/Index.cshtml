@@ -1,0 +1,179 @@
+﻿@model IEnumerable<GymManagement.Models.Member>
+
+@{
+    ViewData["Title"] = "Members";
+}
+
+<!-- Import Font Awesome -->
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+</head>
+
+<!-- Title Section -->
+<div class="text-center my-4">
+    <h2 class="text-dark">All Member Details with Trainer & Package</h2>
+</div>
+
+<!-- Action Button: Add New Member -->
+<div class="text-center mb-3">
+    <a asp-action="Create" class="btn btn-success btn-lg">
+        <i class="fa fa-plus"></i> Add New Member
+    </a>
+</div>
+
+<!-- Styled Search Section -->
+<div class="d-flex justify-content-center mb-4">
+    <form asp-action="Index" method="get" class="w-75">
+        <div class="input-group">
+            <input type="text"
+                   name="searchString"
+                   class="form-control"
+                   placeholder="Search by Full Name, Contact, or Status..."
+                   aria-label="Search" />
+            <button class="btn btn-primary" type="submit">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </form>
+</div>
+
+<!-- Member Table Section -->
+<div class="table-responsive">
+    <table class="table table-bordered table-hover table-striped table-sm">
+        <thead class="table-dark">
+            <tr>
+                <th><i class="fa fa-id-card"></i> Id</th>
+                <th><i class="fa fa-user"></i> Full Name</th>
+                <th><i class="fa fa-venus-mars"></i> Gender</th>
+                <th><i class="fa fa-phone"></i> Contact</th>
+                <th><i class="fa fa-circle-check"></i> Status</th>
+                <th><i class="fa fa-clock"></i> Day Timing</th>
+                <th><i class="fa fa-user-tie"></i> Trainer Name</th>
+                <th><i class="fa fa-box"></i> Package Name</th>
+                <th><i class="fa fa-money-check-alt"></i> Admission Fee</th>
+                <th><i class="fa fa-money-bill-wave"></i> Monthly Fee</th>
+                <th><i class="fa fa-percent"></i> Discount</th>
+                <th><i class="fa fa-dollar-sign"></i> Total Amount</th>
+                <th><i class="fa fa-credit-card"></i> Account</th>
+                <th><i class="fa fa-image"></i> Member Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var member in Model)
+            {
+                <tr>
+                    <td>@member.Id</td>
+                    <td>@member.FullName</td>
+                    <td>@member.Gender</td>
+                    <td>@member.Contact</td>
+                    <td>
+                        @if (member.MemberStatus == "Active")
+                        {
+                            <span class="badge bg-success">
+                                <i class="fa fa-check-circle"></i> Active
+                            </span>
+                        }
+                        else
+                        {
+                            <span class="badge bg-danger">
+                                <i class="fa fa-times-circle"></i> Deactive
+                            </span>
+                        }
+                    </td>
+                    <td>@member.DayTiming</td>
+                    <td>@(member.Trainer?.FullName ?? "No Trainer")</td>
+                    <td>@(member.Package?.PackageName ?? "No Package")</td>
+                    <td>@member.AdmissionFee</td>
+                    <td>@member.MonthlyFee</td>
+                    <td>@member.Discount</td>
+                    <td>@member.TotalAmount</td>
+                    <td>@member.Account</td>
+                    <td>
+                        @if (!string.IsNullOrEmpty(member.MemberImage))
+                        {
+                            <img src="~/images/@member.MemberImage" alt="Member Image" class="img-thumbnail" width="50" height="50" />
+                        }
+                        else
+                        {
+                            <span>No Image</span>
+                        }
+                    </td>
+                    <td>
+                        <a asp-action="Edit" asp-route-id="@member.Id" class="btn btn-warning btn-sm">
+                            <i class="fa fa-edit"></i> Edit
+                        </a>
+                        <a asp-action="Delete" asp-route-id="@member.Id" class="btn btn-danger btn-sm">
+                            <i class="fa fa-trash"></i> Delete
+                        </a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+<!-- CSS Section for Styling -->
+<style>
+    /* Search Bar - Styling & Responsiveness */
+    .input-group input.form-control {
+        border-radius: 30px;
+        border: 1px solid #ced4da;
+        padding-left: 15px;
+        font-size: 16px;
+        transition: all 0.2s ease;
+    }
+
+    .input-group button {
+        background-color: #0056b3;
+        color: white;
+        border: none;
+        padding: 8px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+    }
+
+        .input-group button:hover {
+            background-color: #004494;
+        }
+
+    /* Table Customizations */
+    .table-hover tbody tr:hover {
+        background-color: #f2f2f2;
+    }
+
+    .table-dark th {
+        background-color: #343a40;
+        color: white;
+    }
+
+    /* Buttons */
+    .btn-lg {
+        padding: 10px 20px;
+    }
+
+    /* General Page Styling */
+    body {
+        font-family: 'Arial', sans-serif;
+    }
+</style>
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Success Notification
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>toastr.success('@TempData["SuccessMessage"]');</text>
+        }
+
+            // Error Notification
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>toastr.error('@TempData["ErrorMessage"]');</text>
+        }
+        });
+    </script>
+}

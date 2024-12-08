@@ -1,0 +1,177 @@
+﻿@model GymManagement.Models.ViewModels.MemberViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4>Create Member</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="Create" method="post" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="FullName" class="form-label fw-bold">Full Name</label>
+                            <input asp-for="FullName" class="form-control" placeholder="Enter full name" />
+                            <span asp-validation-for="FullName" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Gender" class="form-label fw-bold">Gender</label>
+                            <select asp-for="Gender" class="form-select" id="Gender">
+                                <option value="">Select Gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                            </select>
+                            <span asp-validation-for="Gender" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Contact" class="form-label fw-bold">Contact</label>
+                            <input asp-for="Contact" class="form-control" placeholder="Enter contact number" />
+                            <span asp-validation-for="Contact" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="MemberStatus" class="form-label fw-bold">Member Status</label>
+                            <select asp-for="MemberStatus" class="form-select">
+                                <option value="Active">Active</option>
+                                <option value="Deactive">Deactive</option>
+                            </select>
+                            <span asp-validation-for="MemberStatus" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="DayTiming" class="form-label fw-bold">Day Timing</label>
+                            <select asp-for="DayTiming" class="form-select">
+                                <option value="Morning">Morning</option>
+                                <option value="Evening">Evening</option>
+                            </select>
+                            <span asp-validation-for="DayTiming" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PackageId" class="form-label fw-bold">Package</label>
+                            <select asp-for="PackageId" class="form-select" id="PackageId">
+                                <option value="">Select Package</option>
+                            </select>
+                            <span asp-validation-for="PackageId" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="PackageExpiryDate" class="form-label fw-bold">Package Expiry Date</label>
+                            <input asp-for="PackageExpiryDate" type="date" class="form-control" />
+                            <span asp-validation-for="PackageExpiryDate" class="text-danger"></span>
+                        </div>
+
+                      <div class="mb-3">
+    <label asp-for="TrainerId" class="form-label fw-bold">Trainer</label>
+    <select asp-for="TrainerId" class="form-select">
+        @foreach (var trainer in (IEnumerable<GymManagement.Models.Trainer>)ViewBag.Trainers)
+        {
+            <option value="@trainer.Id">
+                @trainer.FullName (@trainer.TrainerType)
+            </option>
+        }
+    </select>
+    <span asp-validation-for="TrainerId" class="text-danger"></span>
+</div>
+
+                        <div class="mb-3">
+                            <label asp-for="AdmissionFee" class="form-label fw-bold">Admission Fee</label>
+                            <input asp-for="AdmissionFee" class="form-control" placeholder="Enter admission fee" />
+                            <span asp-validation-for="AdmissionFee" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="MonthlyFee" class="form-label fw-bold">Monthly Fee</label>
+                            <input asp-for="MonthlyFee" class="form-control" placeholder="Enter monthly fee" />
+                            <span asp-validation-for="MonthlyFee" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Discount" class="form-label fw-bold">Discount</label>
+                            <input asp-for="Discount" class="form-control" placeholder="Enter discount amount" />
+                            <span asp-validation-for="Discount" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="TotalAmount" class="form-label fw-bold">Total Amount</label>
+                            <input asp-for="TotalAmount" class="form-control" placeholder="Enter total amount" />
+                            <span asp-validation-for="TotalAmount" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Account" class="form-label fw-bold">Account</label>
+                            <input asp-for="Account" class="form-control" placeholder="Enter account details" />
+                            <span asp-validation-for="Account" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="photo" class="form-label fw-bold">Photo</label>
+                            <input asp-for="photo" type="file" class="form-control" />
+                            <span asp-validation-for="photo" class="text-danger"></span>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-primary">Create Member</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <a asp-action="Index" class="btn btn-link">Back to List</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            function calculateTotalAmount() {
+                var monthlyFee = parseFloat($('#MonthlyFee').val()) || 0;
+                var admissionFee = parseFloat($('#AdmissionFee').val()) || 0;
+                var discount = parseFloat($('#Discount').val()) || 0;
+
+                var totalAmount = monthlyFee + admissionFee - discount;
+                $('#TotalAmount').val(totalAmount.toFixed(2));
+            }
+
+            $('#MonthlyFee, #AdmissionFee, #Discount').on('input', function () {
+                calculateTotalAmount();
+            });
+
+            // Load packages based on gender
+            function loadPackages(gender) {
+                $.ajax({
+                    url: '/Member/GetPackagesByGender',
+                    type: 'GET',
+                    data: { gender: gender },
+                    success: function (data) {
+                        var $packageSelect = $('#PackageId');
+                        $packageSelect.empty(); // Clear existing options
+                        $packageSelect.append('<option value="">Select Package</option>');
+                        $.each(data, function (index, packageItem) {
+                            $packageSelect.append('<option value="' + packageItem.id + '">' + packageItem.packageName + '</option>');
+                        });
+                    },
+                    error: function () {
+                        alert("Error loading packages.");
+                    }
+                });
+            }
+
+            $('#Gender').change(function () {
+                var gender = $(this).val();
+                loadPackages(gender);
+            });
+        });
+    </script>
+}

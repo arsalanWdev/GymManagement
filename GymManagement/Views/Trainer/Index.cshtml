@@ -1,0 +1,84 @@
+﻿@model IEnumerable<GymManagement.Models.Trainer>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-primary">Trainer List</h2>
+        <a asp-action="Create" class="btn btn-success btn-lg">
+            <i class="fas fa-plus"></i> Add New Trainer
+        </a>
+    </div>
+
+    <!-- Search Section -->
+    <div class="mb-4">
+        <form asp-action="Index" method="get" class="input-group shadow-sm bg-white p-3 rounded-lg">
+            <input type="text" name="searchString" class="form-control" placeholder="Search by name or contact..." />
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-search"></i> Search
+            </button>
+        </form>
+    </div>
+
+    <div class="card shadow">
+        <div class="card-body">
+            <table class="table table-hover table-striped align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Full Name</th>
+                        <th>Trainer Type</th>
+                        <th>Contact No</th>
+                        <th>Status</th>
+                        <th class="text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted">No trainers available</td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var trainer in Model)
+                        {
+                            <tr>
+                                <td>@trainer.FullName</td>
+                                <td>@trainer.TrainerType</td>
+                                <td>@trainer.ContactNo</td>
+                                <td>@trainer.Status</td>
+                                <td class="text-center">
+                                    <a asp-action="Edit" asp-route-id="@trainer.Id" class="btn btn-warning btn-sm me-1">
+                                        <i class="fas fa-edit"></i> Edit
+                                    </a>
+                                    <a asp-action="Delete" asp-route-id="@trainer.Id" class="btn btn-danger btn-sm">
+                                        <i class="fas fa-trash-alt"></i> Delete
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            // Success Notification
+        @if (TempData["SuccessMessage"] != null)
+        {
+            <text>toastr.success('@TempData["SuccessMessage"]');</text>
+        }
+
+            // Error Notification
+        @if (TempData["ErrorMessage"] != null)
+        {
+            <text>toastr.error('@TempData["ErrorMessage"]');</text>
+        }
+        });
+    </script>
+}

@@ -1,0 +1,74 @@
+﻿@model List<GymManagement.Models.Member>
+
+@{
+    ViewData["Title"] = "Members with Trainers";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <!-- Page Title -->
+    <div class="text-center mb-4">
+        <h1 class="text-primary">Members with Trainers</h1>
+        <hr class="w-25 border-primary" />
+    </div>
+
+    <!-- Search Section -->
+    <div class="mb-4">
+        <form asp-action="MembersWithTrainers" method="get" class="input-group shadow-sm bg-white p-3 rounded-lg">
+            <input type="text" name="searchString" class="form-control" placeholder="Search by name or contact..." />
+            <button type="submit" class="btn btn-primary">
+                <i class="fa fa-search"></i> Search
+            </button>
+        </form>
+    </div>
+    <!-- Members Table Section -->
+    <div class="card shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <i class="fa fa-users"></i> Member & Trainer Information
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover table-bordered table-striped table-sm">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Full Name</th>
+                            <th>Trainer Name</th>
+                            <th>Contact</th>
+                            <th>Member Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var member in Model)
+                        {
+                            <tr>
+                                <td>
+                                    <i class="fa fa-user"></i> @member.FullName
+                                </td>
+                                <td>
+                                    <i class="fa fa-user-tie"></i> @(member.Trainer?.FullName ?? "No Trainer")
+                                </td>
+                                <td>
+                                    <i class="fa fa-phone"></i> @member.Contact
+                                </td>
+                                <td>
+                                    @if (member.MemberStatus == "Active")
+                                    {
+                                        <span class="badge bg-success">
+                                            <i class="fa fa-check-circle"></i> Active
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge bg-danger">
+                                            <i class="fa fa-times-circle"></i> Inactive
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

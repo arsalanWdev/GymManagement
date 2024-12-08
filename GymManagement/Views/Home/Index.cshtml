@@ -1,0 +1,155 @@
+﻿@{
+    ViewData["Title"] = "Gym Management";
+}
+
+<!-- Custom Styles -->
+<style>
+    .carousel-item img {
+        object-fit: cover;
+        height: 500px; /* Fixed height for all slides */
+        width: 100%;
+    }
+
+    .card {
+        border-radius: 15px;
+    }
+
+        .card img {
+            border-top-left-radius: 15px;
+            border-top-right-radius: 15px;
+            height: 200px;
+            object-fit: cover;
+        }
+
+    .card-body h5 {
+        font-weight: bold;
+    }
+
+    .blockquote {
+        font-size: 1.2rem;
+        line-height: 1.5;
+    }
+
+    section h2 {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border: none;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+        }
+</style>
+
+<div class="container-fluid p-0">
+    <!-- Carousel Section -->
+    <div id="gymCarousel" class="carousel slide" data-bs-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <img src="~/images/slider1.jpg" alt="Gym Image 1">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 class="display-4 text-uppercase">Welcome to Gym Management</h1>
+                    <p>Your fitness journey starts here!</p>
+                    <a href="/Member/Create" class="btn btn-primary btn-lg">Join Now</a>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/slider2.jpg" alt="Gym Image 2">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 class="display-4 text-uppercase">State-of-the-Art Facilities</h1>
+                    <p>Train with the best equipment and trainers.</p>
+                </div>
+            </div>
+            <div class="carousel-item">
+                <img src="~/images/slider3.jpg" alt="Gym Image 3">
+                <div class="carousel-caption d-none d-md-block">
+                    <h1 class="display-4 text-uppercase">Achieve Your Goals</h1>
+                    <p>Customized workout plans to suit your needs.</p>
+                </div>
+            </div>
+        </div>
+        <button class="carousel-control-prev" type="button" data-bs-target="#gymCarousel" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#gymCarousel" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+</div>
+
+<!-- About Us Section -->
+<section class="py-5 text-center bg-light">
+    <div class="container">
+        <h2 class="text-uppercase">Why Choose Us?</h2>
+        <p class="lead text-muted">We provide state-of-the-art training facilities and professional guidance to help you achieve your fitness goals.</p>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="py-5">
+    <div class="container">
+        <h2 class="text-uppercase text-center mb-5">Our Services</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <img src="~/images/service1.jpeg" class="card-img-top" alt="Personal Training">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Personal Training</h5>
+                        <p class="card-text">Tailored training programs with certified experts.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <img src="~/images/service2.jpeg" class="card-img-top" alt="Group Classes">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Group Classes</h5>
+                        <p class="card-text">Energetic and fun group workout sessions.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card shadow">
+                    <img src="~/images/service3.jpeg" class="card-img-top" alt="Nutrition Plans">
+                    <div class="card-body text-center">
+                        <h5 class="card-title">Nutrition Plans</h5>
+                        <p class="card-text">Customized nutrition strategies for optimal results.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials Section -->
+<section class="py-5 bg-dark text-white">
+    <div class="container">
+        <h2 class="text-uppercase text-center mb-5">What Our Members Say</h2>
+        <div class="row">
+            <div class="col-md-4">
+                <blockquote class="blockquote text-center">
+                    <p>"The trainers here are phenomenal! My fitness journey has been amazing."</p>
+                    <footer class="blockquote-footer text-white">Ali Khan</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote text-center">
+                    <p>"Great gym, modern equipment, and a supportive community."</p>
+                    <footer class="blockquote-footer text-white">Fatima Ahmed</footer>
+                </blockquote>
+            </div>
+            <div class="col-md-4">
+                <blockquote class="blockquote text-center">
+                    <p>"I achieved my fitness goals with their personalized plans!"</p>
+                    <footer class="blockquote-footer text-white">Omer Malik</footer>
+                </blockquote>
+            </div>
+        </div>
+    </div>
+</section>

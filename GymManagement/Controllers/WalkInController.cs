@@ -11,23 +11,23 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GymManagement.Controllers
 {
-    [Authorize(Roles = "Admin")]
-    public class PackageController : Controller
+    [Authorize(Roles ="Receptionist")]
+    public class WalkInController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public PackageController(ApplicationDbContext context)
+        public WalkInController(ApplicationDbContext context)
         {
             _context = context;
         }
 
-        // GET: Package
+        // GET: WalkIn
         public async Task<IActionResult> Index()
         {
-            return View(await _context.Packages.ToListAsync());
+            return View(await _context.WalkIns.ToListAsync());
         }
 
-        // GET: Package/Details/5
+        // GET: WalkIn/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -35,40 +35,39 @@ namespace GymManagement.Controllers
                 return NotFound();
             }
 
-            var package = await _context.Packages
+            var walkIn = await _context.WalkIns
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (package == null)
+            if (walkIn == null)
             {
                 return NotFound();
             }
 
-            return View(package);
+            return View(walkIn);
         }
 
-        // GET: Package/Create
+        // GET: WalkIn/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: Package/Create
+        // POST: WalkIn/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,PackageName,PackagePrice,Gender")] Package package)
+        public async Task<IActionResult> Create([Bind("Id,Name,Contact,VisitDate,Purpose")] WalkIn walkIn)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(package);
+                _context.Add(walkIn);
                 await _context.SaveChangesAsync();
-                TempData["SuccessMessage"] = "Package Created Successfully";
                 return RedirectToAction(nameof(Index));
             }
-            return View(package);
+            return View(walkIn);
         }
 
-        // GET: Package/Edit/5
+        // GET: WalkIn/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -76,22 +75,22 @@ namespace GymManagement.Controllers
                 return NotFound();
             }
 
-            var package = await _context.Packages.FindAsync(id);
-            if (package == null)
+            var walkIn = await _context.WalkIns.FindAsync(id);
+            if (walkIn == null)
             {
                 return NotFound();
             }
-            return View(package);
+            return View(walkIn);
         }
 
-        // POST: Package/Edit/5
+        // POST: WalkIn/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,PackageName,PackagePrice,Gender")] Package package)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Contact,VisitDate,Purpose")] WalkIn walkIn)
         {
-            if (id != package.Id)
+            if (id != walkIn.Id)
             {
                 return NotFound();
             }
@@ -100,13 +99,12 @@ namespace GymManagement.Controllers
             {
                 try
                 {
-                    _context.Update(package);
+                    _context.Update(walkIn);
                     await _context.SaveChangesAsync();
-                    TempData["SuccessMessage"] = "Package Updated Successfully";
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!PackageExists(package.Id))
+                    if (!WalkInExists(walkIn.Id))
                     {
                         return NotFound();
                     }
@@ -117,10 +115,10 @@ namespace GymManagement.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(package);
+            return View(walkIn);
         }
 
-        // GET: Package/Delete/5
+        // GET: WalkIn/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -128,35 +126,34 @@ namespace GymManagement.Controllers
                 return NotFound();
             }
 
-            var package = await _context.Packages
+            var walkIn = await _context.WalkIns
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (package == null)
+            if (walkIn == null)
             {
                 return NotFound();
             }
 
-            return View(package);
+            return View(walkIn);
         }
 
-        // POST: Package/Delete/5
+        // POST: WalkIn/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var package = await _context.Packages.FindAsync(id);
-            if (package != null)
+            var walkIn = await _context.WalkIns.FindAsync(id);
+            if (walkIn != null)
             {
-                _context.Packages.Remove(package);
+                _context.WalkIns.Remove(walkIn);
             }
 
             await _context.SaveChangesAsync();
-            TempData["SuccessMessage"] = "Pakcgae Deleted Successfully";
             return RedirectToAction(nameof(Index));
         }
 
-        private bool PackageExists(int id)
+        private bool WalkInExists(int id)
         {
-            return _context.Packages.Any(e => e.Id == id);
+            return _context.WalkIns.Any(e => e.Id == id);
         }
     }
 }

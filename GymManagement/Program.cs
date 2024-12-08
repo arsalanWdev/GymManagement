@@ -2,6 +2,7 @@ using GymManagement.Areas.Identity.Data;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
+using OfficeOpenXml;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,6 +14,7 @@ builder.Services.AddDefaultIdentity<ApplicationUser>()
     .AddRoles<IdentityRole>() // Ensure roles are included
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+ExcelPackage.LicenseContext = LicenseContext.NonCommercial;
 
 
 builder.Services.AddTransient<IEmailSender, NoOpEmailSender>();  // No-Op Email Sender
@@ -41,7 +43,7 @@ app.MapRazorPages();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Member}/{action=Index}/{id?}");
+    pattern: "{controller=Home}/{action=Index}/{id?}");
 
 // Seed roles and admin user AFTER the app has run
 using (var scope = app.Services.CreateScope())
@@ -57,7 +59,7 @@ static async Task CreateRolesAndAdminUser(IServiceProvider serviceProvider)
     var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
     var userManager = serviceProvider.GetRequiredService<UserManager<ApplicationUser>>();
 
-    string[] roleNames = { "Admin" };
+    string[] roleNames = { "Admin" ,"Receptionist"};
     IdentityResult roleResult;
 
     foreach (var roleName in roleNames)

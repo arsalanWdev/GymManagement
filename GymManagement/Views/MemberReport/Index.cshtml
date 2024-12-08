@@ -1,0 +1,92 @@
+﻿@model IEnumerable<GymManagement.Models.Member>
+
+@{
+    ViewData["Title"] = "Filter Members";
+}
+
+<div class="container my-4">
+    <h2 class="text-center">Filter Members</h2>
+
+    <!-- Filter Form -->
+    <form asp-action="Index" method="get" class="mb-4">
+        <div class="row g-3">
+            <div class="col-md-3">
+                <input type="text" name="name" class="form-control" placeholder="Filter by Name" />
+            </div>
+            <div class="col-md-3">
+                <input type="text" name="contact" class="form-control" placeholder="Filter by Contact" />
+            </div>
+            <div class="col-md-3">
+                <select name="gender" class="form-select">
+                    <option value="">Filter by Gender</option>
+                    <option value="Male">Male</option>
+                    <option value="Female">Female</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="startDate" class="form-control" placeholder="Start Date" />
+            </div>
+            <div class="col-md-3">
+                <input type="date" name="endDate" class="form-control" placeholder="End Date" />
+            </div>
+        </div>
+        <button type="submit" class="btn btn-primary mt-3">
+            <i class="fa fa-search"></i> Search
+        </button>
+        <a asp-action="DownloadReport" class="btn btn-success mt-3">
+            <i class="fa fa-download"></i> Download Report
+        </a>
+    </form>
+
+    <!-- Members Table -->
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Full Name</th>
+                <th>Gender</th>
+                <th>Contact</th>
+                <th>Status</th>
+                <th>Day Timing</th>
+                <th>Trainer Name</th>
+                <th>Package Name</th>
+                <th>Admission Fee</th>
+                <th>Monthly Fee</th>
+                <th>Discount</th>
+                <th>Total Amount</th>
+                <th>Account</th>
+                <th>Account Open Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (Model.Any())
+            {
+                @foreach (var member in Model)
+                {
+                    <tr>
+                        <td>@member.Id</td>
+                        <td>@member.FullName</td>
+                        <td>@member.Gender</td>
+                        <td>@member.Contact</td>
+                        <td>@member.MemberStatus</td>
+                        <td>@member.DayTiming</td>
+                        <td>@(member.Trainer?.FullName ?? "No Trainer")</td>
+                        <td>@(member.Package?.PackageName ?? "No Package")</td>
+                        <td>@member.AdmissionFee</td>
+                        <td>@member.MonthlyFee</td>
+                        <td>@member.Discount</td>
+                        <td>@member.TotalAmount</td>
+                        <td>@member.Account</td>
+                        <td>@member.AccountOpenDate.ToShortDateString()</td>
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="14" class="text-center">No records found.</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

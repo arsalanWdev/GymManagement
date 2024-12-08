@@ -1,0 +1,16 @@
+﻿@model RoleBase.Areas.Admin.Controllers.UserRoleViewModel
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-body text-center">
+            <h3 class="text-danger mb-4">Are you sure you want to delete the user <strong>@Model.Email</strong>?</h3>
+
+            <form asp-action="ConfirmDelete" method="post" class="d-inline-block">
+                <input type="hidden" asp-for="Id" />
+                <button type="submit" class="btn btn-danger px-4">Delete</button>
+            </form>
+
+            <a asp-action="Index" class="btn btn-secondary px-4 ms-2">Cancel</a>
+        </div>
+    </div>
+</div>

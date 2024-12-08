@@ -1,5 +1,6 @@
 ﻿using GymManagement.Areas.Identity.Data;
 using GymManagement.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -8,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace GymManagement.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class TrainerController : Controller
     {
         private readonly ApplicationDbContext _context;

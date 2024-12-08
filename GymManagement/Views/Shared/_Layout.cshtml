@@ -74,6 +74,11 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav">
+                        @if(User.IsInRole("Receptionist")){
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="WalkIn" asp-action="Index"><i class="fas fa-user-plus"></i> Add WalkIn</a>
+                            </li>
+                        }
                         @if (User.IsInRole("Admin"))
                         {
                             <li class="nav-item">
@@ -90,6 +95,15 @@
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" asp-area="" asp-controller="Trainer" asp-action="Index"><i class="fas fa-box"></i> Add Trainer</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="Admin" asp-controller="User" asp-action="Index"><i class="fas fa-box"></i> Add User</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="Report" asp-action="DownloadReport"><i class="fas fa-box"></i> WalkIn Report</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" asp-area="" asp-controller="MemberReport" asp-action="Index"><i class="fas fa-box"></i>Member Report</a>
                             </li>
                         }
                     </ul>

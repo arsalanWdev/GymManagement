@@ -1,12 +1,15 @@
 ﻿    using GymManagement.Areas.Identity.Data;
 using GymManagement.Models;
 using GymManagement.Models.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
 using System.IO;
 
 namespace GymManagement.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class MemberController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -47,7 +50,6 @@ namespace GymManagement.Controllers
             ViewBag.Trainers = _context.Trainers.ToList();
             return View();
         }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(MemberViewModel model)
@@ -70,6 +72,11 @@ namespace GymManagement.Controllers
                         }
                     }
 
+                    // Handle trainer selection logic safely
+                    var trainerId = string.IsNullOrEmpty(model.TrainerId.ToString()) || model.TrainerId == 0
+                        ? null
+                        : (int?)model.TrainerId;
+
                     var member = new Member
                     {
                         FullName = model.FullName,
@@ -79,7 +86,7 @@ namespace GymManagement.Controllers
                         DayTiming = model.DayTiming,
                         AccountOpenDate = DateTime.Now,
                         PackageId = model.PackageId,
-                        TrainerId = model.TrainerId,
+                        TrainerId = trainerId,
                         AdmissionFee = model.AdmissionFee,
                         MonthlyFee = model.MonthlyFee,
                         Discount = model.Discount,
@@ -103,6 +110,8 @@ namespace GymManagement.Controllers
             ViewBag.Trainers = _context.Trainers.ToList();
             return View(model);
         }
+
+
         #endregion
 
         #region Edit Member

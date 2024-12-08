@@ -1,0 +1,46 @@
+﻿@model GymManagement.Models.WalkIn
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg mx-auto" style="max-width: 600px;">
+        <div class="card-header bg-info text-white text-center">
+            <h4>Walk-In Details</h4>
+        </div>
+        <div class="card-body">
+            <dl class="row">
+                <dt class="col-sm-4 fw-bold text-secondary">
+                    @Html.DisplayNameFor(model => model.Name)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Name)
+                </dd>
+                <dt class="col-sm-4 fw-bold text-secondary">
+                    @Html.DisplayNameFor(model => model.Contact)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Contact)
+                </dd>
+                <dt class="col-sm-4 fw-bold text-secondary">
+                    @Html.DisplayNameFor(model => model.VisitDate)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.VisitDate)
+                </dd>
+                <dt class="col-sm-4 fw-bold text-secondary">
+                    @Html.DisplayNameFor(model => model.Purpose)
+                </dt>
+                <dd class="col-sm-8">
+                    @Html.DisplayFor(model => model.Purpose)
+                </dd>
+            </dl>
+        </div>
+        <div class="card-footer text-center">
+            <a asp-action="Edit" asp-route-id="@Model?.Id" class="btn btn-primary w-40 mx-1">Edit</a>
+            <a asp-action="Index" class="btn btn-secondary w-40 mx-1">Back to List</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,38 @@
+﻿@model RoleBase.Areas.Admin.Controllers.EditUserRoleViewModel
+
+<div class="container mt-5">
+    <div class="card shadow-lg">
+        <div class="card-header bg-primary text-white text-center">
+            <h3>Edit Roles for <strong>@Model.Email</strong></h3>
+        </div>
+        <div class="card-body">
+            <form asp-action="Edit">
+                <input type="hidden" asp-for="UserId" />
+                <table class="table table-bordered table-hover">
+                    <thead class="table-dark">
+                        <tr>
+                            <th>Role</th>
+                            <th>Assigned</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (int i = 0; i < Model.Roles.Count; i++)
+                        {
+                            <tr>
+                                <td class="align-middle">@Model.Roles[i].RoleName</td>
+                                <td class="align-middle text-center">
+                                    <input asp-for="Roles[i].IsAssigned" type="checkbox" class="form-check-input" />
+                                    <input asp-for="Roles[i].RoleName" type="hidden" />
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+                <div class="text-center mt-4">
+                    <button type="submit" class="btn btn-success px-4">Save Changes</button>
+                    <a asp-action="Index" class="btn btn-secondary px-4 ms-2">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

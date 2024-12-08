@@ -13,6 +13,8 @@ public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     public DbSet<Member> Members { get; set; }
     public DbSet<Package> Packages { get; set; }
     public DbSet<Trainer> Trainers { get; set; }
+    public DbSet<WalkIn> WalkIns{ get; set; }
+
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {

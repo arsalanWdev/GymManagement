@@ -70,18 +70,19 @@
                             <span asp-validation-for="PackageExpiryDate" class="text-danger"></span>
                         </div>
 
-                      <div class="mb-3">
-    <label asp-for="TrainerId" class="form-label fw-bold">Trainer</label>
-    <select asp-for="TrainerId" class="form-select">
-        @foreach (var trainer in (IEnumerable<GymManagement.Models.Trainer>)ViewBag.Trainers)
-        {
-            <option value="@trainer.Id">
-                @trainer.FullName (@trainer.TrainerType)
-            </option>
-        }
-    </select>
-    <span asp-validation-for="TrainerId" class="text-danger"></span>
-</div>
+                        <div class="mb-3">
+                            <label asp-for="TrainerId" class="form-label fw-bold">Trainer</label>
+                            <select asp-for="TrainerId" class="form-select">
+                                <option value="">Select a Trainer</option> <!-- Empty default selection -->
+                                <option value="0">Without Trainer</option>
+                                @foreach (var trainer in (IEnumerable<GymManagement.Models.Trainer>)ViewBag.Trainers)
+                                {
+                                    <option value="@trainer.Id">@trainer.FullName (@trainer.TrainerType)</option>
+                                }
+                            </select>
+                            <span asp-validation-for="TrainerId" class="text-danger"></span>
+                        </div>
+
 
                         <div class="mb-3">
                             <label asp-for="AdmissionFee" class="form-label fw-bold">Admission Fee</label>

@@ -1,0 +1,34 @@
+﻿@model GymManagement.Models.ViewModels.WalkInReportViewModel
+
+@{
+    ViewData["Title"] = "Download Walk-In Report";
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg border-0">
+        <div class="card-header bg-success text-white text-center">
+            <h2>Download Walk-In Report</h2>
+        </div>
+        <div class="card-body p-4">
+            <form asp-action="DownloadReport" method="post">
+                <div class="mb-3">
+                    <label for="selectedDate" class="form-label fw-bold">Select Date:</label>
+                    <input asp-for="SelectedDate"
+                           type="date"
+                           class="form-control border-success shadow-sm"
+                           id="selectedDate"
+                           required />
+                    <span asp-validation-for="SelectedDate" class="text-danger"></span>
+                </div>
+                <div class="text-center">
+                    <button type="submit" class="btn btn-success btn-lg px-5">
+                        <i class="fas fa-download me-2"></i>Download Report
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="card-footer text-muted text-center">
+            Please select a date to download the report.
+        </div>
+    </div>
+</div>

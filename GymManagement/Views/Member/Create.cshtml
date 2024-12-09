@@ -74,7 +74,7 @@
                             <label asp-for="TrainerId" class="form-label fw-bold">Trainer</label>
                             <select asp-for="TrainerId" class="form-select">
                                 <option value="">Select a Trainer</option> <!-- Empty default selection -->
-                                <option value="0">Without Trainer</option>
+                                <option value="">Without Trainer</option>
                                 @foreach (var trainer in (IEnumerable<GymManagement.Models.Trainer>)ViewBag.Trainers)
                                 {
                                     <option value="@trainer.Id">@trainer.FullName (@trainer.TrainerType)</option>

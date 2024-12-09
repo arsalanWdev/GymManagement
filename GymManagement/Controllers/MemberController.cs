@@ -1,4 +1,4 @@
-﻿    using GymManagement.Areas.Identity.Data;
+﻿using GymManagement.Areas.Identity.Data;
 using GymManagement.Models;
 using GymManagement.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -26,21 +26,24 @@ namespace GymManagement.Controllers
         {
             var query = _context.Members
                 .Include(m => m.Package)
-                .Include(m => m.Trainer)    
+                .Include(m => m.Trainer)
                 .AsQueryable();
 
             if (!string.IsNullOrEmpty(searchString))
             {
+                searchString = searchString.ToLower(); // Convert to lowercase for consistent comparison
+
                 query = query.Where(m =>
-                    m.FullName.Contains(searchString) ||
-                    m.Contact.Contains(searchString) ||
-                    m.MemberStatus.Contains(searchString));
+                    (m.FullName != null && m.FullName.ToLower().Contains(searchString)) ||
+                    (m.Contact != null && m.Contact.ToLower().Contains(searchString)) ||
+                    (m.MemberStatus != null && m.MemberStatus.ToLower().Contains(searchString))); // Ensure case-insensitive comparison
             }
 
             var members = await query.ToListAsync();
             return View(members);
         }
         #endregion
+
 
 
         #region Create Member
@@ -72,10 +75,8 @@ namespace GymManagement.Controllers
                         }
                     }
 
-                    // Handle trainer selection logic safely
-                    var trainerId = string.IsNullOrEmpty(model.TrainerId.ToString()) || model.TrainerId == 0
-                        ? null
-                        : (int?)model.TrainerId;
+                    var trainerId = model.TrainerId == 0 ? (int?)0 : model.TrainerId;
+
 
                     var member = new Member
                     {
@@ -85,6 +86,7 @@ namespace GymManagement.Controllers
                         MemberStatus = model.MemberStatus,
                         DayTiming = model.DayTiming,
                         AccountOpenDate = DateTime.Now,
+                        PackageExpiryDate = model.PackageExpiryDate,
                         PackageId = model.PackageId,
                         TrainerId = trainerId,
                         AdmissionFee = model.AdmissionFee,
@@ -113,6 +115,44 @@ namespace GymManagement.Controllers
 
 
         #endregion
+        #region Member Details
+        // GET: Member/Details/5
+        public async Task<IActionResult> Details(int id)
+        {
+            var member = await _context.Members
+                .Include(m => m.Package)
+                .Include(m => m.Trainer)
+                .FirstOrDefaultAsync(m => m.Id == id);
+
+            if (member == null)
+            {
+                return NotFound();
+            }
+
+            var viewModel = new MemberDetailViewModel
+            {
+                Id = member.Id,
+                FullName = member.FullName,
+                Gender = member.Gender,
+                Contact = member.Contact,
+                MemberStatus = member.MemberStatus,
+                DayTiming = member.DayTiming,
+                AccountOpenDate = member.AccountOpenDate,
+                PackageExpiryDate = member.PackageExpiryDate,
+                AdmissionFee = member.AdmissionFee,
+                MonthlyFee = member.MonthlyFee,
+                Discount = member.Discount,
+                TotalAmount = member.TotalAmount,
+                Account = member.Account,
+                MemberImage = member.MemberImage,
+                PackageName = member.Package?.PackageName,
+                TrainerName = member.Trainer?.FullName
+            };
+
+            return View(viewModel);
+        }
+        #endregion
+
 
         #region Edit Member
         public async Task<IActionResult> Edit(int id)
@@ -188,6 +228,7 @@ namespace GymManagement.Controllers
 
                         member.MemberImage = uniqueFileName;
                     }
+
 
                     member.FullName = model.FullName;
                     member.Gender = model.Gender;

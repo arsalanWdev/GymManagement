@@ -39,24 +39,23 @@
 
 <!-- Member Table Section -->
 <div class="table-responsive">
-    <table class="table table-bordered table-hover table-striped table-sm">
+    <table class="table table-bordered table-hover table-striped">
         <thead class="table-dark">
             <tr>
-                <th><i class="fa fa-id-card"></i> Id</th>
-                <th><i class="fa fa-user"></i> Full Name</th>
-                <th><i class="fa fa-venus-mars"></i> Gender</th>
-                <th><i class="fa fa-phone"></i> Contact</th>
-                <th><i class="fa fa-circle-check"></i> Status</th>
-                <th><i class="fa fa-clock"></i> Day Timing</th>
-                <th><i class="fa fa-user-tie"></i> Trainer Name</th>
-                <th><i class="fa fa-box"></i> Package Name</th>
-                <th><i class="fa fa-money-check-alt"></i> Admission Fee</th>
-                <th><i class="fa fa-money-bill-wave"></i> Monthly Fee</th>
-                <th><i class="fa fa-percent"></i> Discount</th>
-                <th><i class="fa fa-dollar-sign"></i> Total Amount</th>
-                <th><i class="fa fa-credit-card"></i> Account</th>
-                <th><i class="fa fa-image"></i> Member Image</th>
-                <th>Actions</th>
+                <th style="width: 5%;"><i class="fa fa-id-card"></i> Id</th>
+                <th style="width: 12%;"><i class="fa fa-user"></i> Full Name</th>
+                <th style="width: 8%;"><i class="fa fa-venus-mars"></i> Gender</th>
+                <th style="width: 12%;"><i class="fa fa-phone"></i> Contact</th>
+                <th style="width: 8%;"><i class="fa fa-circle-check"></i> Status</th>
+                <th style="width: 10%;"><i class="fa fa-clock"></i> Day Timing</th>
+                <th style="width: 12%;"><i class="fa fa-user-tie"></i> Trainer Name</th>
+                <th style="width: 12%;"><i class="fa fa-box"></i> Package Name</th>
+                <th style="width: 8%;"><i class="fa fa-money-check-alt"></i> Fee</th>
+                <th style="width: 8%;"><i class="fa fa-percent"></i> Discount</th>
+                <th style="width: 8%;"><i class="fa fa-dollar-sign"></i> Total</th>
+                <th style="width: 8%;"><i class="fa fa-credit-card"></i> Account</th>
+                <th style="width: 10%;"><i class="fa fa-image"></i> Image</th>
+                <th style="width: 15%;">Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -85,7 +84,6 @@
                     <td>@(member.Trainer?.FullName ?? "No Trainer")</td>
                     <td>@(member.Package?.PackageName ?? "No Package")</td>
                     <td>@member.AdmissionFee</td>
-                    <td>@member.MonthlyFee</td>
                     <td>@member.Discount</td>
                     <td>@member.TotalAmount</td>
                     <td>@member.Account</td>
@@ -100,13 +98,19 @@
                         }
                     </td>
                     <td>
-                        <a asp-action="Edit" asp-route-id="@member.Id" class="btn btn-warning btn-sm">
-                            <i class="fa fa-edit"></i> Edit
-                        </a>
-                        <a asp-action="Delete" asp-route-id="@member.Id" class="btn btn-danger btn-sm">
-                            <i class="fa fa-trash"></i> Delete
-                        </a>
+                        <div class="d-grid gap-2 d-md-flex justify-content-center">
+                            <a asp-action="Edit" asp-route-id="@member.Id" class="btn btn-warning btn-sm mx-1">
+                                <i class="fa fa-edit"></i> Edit
+                            </a>
+                            <a asp-action="Details" asp-route-id="@member.Id" class="btn btn-info btn-sm mx-1">
+                                <i class="fa fa-info-circle"></i> Details
+                            </a>
+                            <a asp-action="Delete" asp-route-id="@member.Id" class="btn btn-danger btn-sm mx-1">
+                                <i class="fa fa-trash"></i> Delete
+                            </a>
+                        </div>
                     </td>
+
                 </tr>
             }
         </tbody>
@@ -115,42 +119,24 @@
 
 <!-- CSS Section for Styling -->
 <style>
-    /* Search Bar - Styling & Responsiveness */
-    .input-group input.form-control {
-        border-radius: 30px;
-        border: 1px solid #ced4da;
-        padding-left: 15px;
-        font-size: 16px;
-        transition: all 0.2s ease;
-    }
-
-    .input-group button {
-        background-color: #0056b3;
-        color: white;
-        border: none;
-        padding: 8px 20px;
-        border-radius: 30px;
-        cursor: pointer;
-        transition: all 0.2s ease;
-    }
-
-        .input-group button:hover {
-            background-color: #004494;
-        }
-
     /* Table Customizations */
-    .table-hover tbody tr:hover {
-        background-color: #f2f2f2;
+    .table th,
+    .table td {
+        vertical-align: middle;
+        text-align: center;
+        font-size: 0.9rem;
     }
 
-    .table-dark th {
-        background-color: #343a40;
-        color: white;
+    .table img {
+        border-radius: 5px;
     }
 
-    /* Buttons */
-    .btn-lg {
-        padding: 10px 20px;
+    ]
+
+    .table td {
+        font-size: 0.8rem;
+    }
+
     }
 
     /* General Page Styling */
@@ -158,7 +144,6 @@
         font-family: 'Arial', sans-serif;
     }
 </style>
-
 
 @section Scripts {
     <script>

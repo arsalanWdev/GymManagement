@@ -1,0 +1,42 @@
+﻿@model GymManagement.Models.ViewModels.MemberDetailViewModel
+
+@using System.Globalization
+
+@{
+    ViewData["Title"] = "Member Details";
+
+    // Define culture for Pakistani Rupees
+    var cultureInfo = new CultureInfo("en-PK");
+    cultureInfo.NumberFormat.CurrencySymbol = "Rs.";
+}
+
+<h2>Member Details</h2>
+
+<div class="card">
+    <div class="card-body">
+        <div class="row">
+            <div class="col-md-4">
+                <img src="~/images/@Model.MemberImage" alt="@Model.FullName" class="img-fluid rounded">
+            </div>
+            <div class="col-md-8">
+                <h4>@Model.FullName</h4>
+                <p><strong>Gender:</strong> @Model.Gender</p>
+                <p><strong>Contact:</strong> @Model.Contact</p>
+                <p><strong>Status:</strong> @Model.MemberStatus</p>
+                <p><strong>Day Timing:</strong> @Model.DayTiming</p>
+                <p><strong>Account Open Date:</strong> @Model.AccountOpenDate?.ToString("yyyy-MM-dd")</p>
+                <p><strong>Package Expiry Date:</strong> @Model.PackageExpiryDate?.ToString("yyyy-MM-dd")</p>
+                <p><strong>Admission Fee:</strong> @Model.AdmissionFee.ToString("C", cultureInfo)</p>
+                <p><strong>Monthly Fee:</strong> @Model.MonthlyFee.ToString("C", cultureInfo)</p>
+                <p><strong>Discount:</strong> @Model.Discount.ToString("C", cultureInfo)</p>
+                <p><strong>Total Amount:</strong> @Model.TotalAmount.ToString("C", cultureInfo)</p>
+                <p><strong>Account:</strong> @Model.Account</p>
+                <p><strong>Package:</strong> @Model.PackageName</p>
+                <p><strong>Trainer:</strong> @Model.TrainerName</p>
+            </div>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a href="@Url.Action("Index", "Member")" class="btn btn-secondary">Back to List</a>
+    </div>
+</div>
